@@ -15,7 +15,7 @@ jobs:
         node-version: [12.x]
 
     steps:
-     - uses: browser-actions/setup-chrome@latest
+      - uses: browser-actions/setup-chrome@latest
       - run: chrome --version
     steps:
       - uses: actions/checkout@v2
@@ -26,10 +26,8 @@ jobs:
           node-version: ${{ matrix.node-version }}
 
       - run: npm ci
-      - run: npm install chromedriver --detect_chromedriver_version
 
-
-      # - run: npm install chromedriver
+      - run: npm install chromedriver
 
       - run: npm run test
         env:
