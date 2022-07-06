@@ -21,10 +21,7 @@ jobs:
         with:
           node-version: "14.x"
       - name: applitools-install
-        uses: colbyfayock/applitools-eyes-action@main
-        with:
-          APPLITOOLS_API_KEY: ${{secrets.APPLITOOLS_API_KEY}}
-          baseUrl: https://demo.applitools.com/
-      - run: npm ci
+      - run: npm install
+      # - run: npm ci
       - name: Run Tests
         run: npm run test
