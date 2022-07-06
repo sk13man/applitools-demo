@@ -11,23 +11,11 @@ exports.config = {
     },
   ],
 
-  logLevel: "silent",
+  logLevel: "info",
   bail: 0,
   waitforTimeout: 10000,
   connectionRetryCount: 3,
-  services: [
-    [
-      "chromedriver",
-      "applitools",
-      {
-        key: "1xePtLn104HtdZYkhkLhO7Deu38QNFTM7ULo14QX2IwyY110", // can be passed here or via environment variable `APPLITOOLS_KEY`
-        viewport: {
-          width: 1920,
-          height: 1080,
-        },
-      },
-    ],
-  ],
+  services: [["chromedriver", "applitools"]],
   framework: "mocha",
   reporters: ["spec"],
   mochaOpts: {
@@ -35,6 +23,6 @@ exports.config = {
     timeout: 60000,
   },
   before: function (capabilities, specs) {
-    browser.setWindowSize(1800, 2000); // <-- this command
+    browser.setWindowSize(1280, 960);
   },
 };

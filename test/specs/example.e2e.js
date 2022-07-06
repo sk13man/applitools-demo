@@ -3,7 +3,7 @@ const {
   RunnerOptions,
   Eyes,
   Target,
-  BatchInfo,
+  By,
 } = require("@applitools/eyes-webdriverio");
 
 let eyes;
@@ -17,26 +17,40 @@ describe("Demo App - wdio6", function () {
     eyes = new Eyes(runner);
     configuration = eyes.getConfiguration();
     configuration.setApiKey("1xePtLn104HtdZYkhkLhO7Deu38QNFTM7ULo14QX2IwyY110");
-    // configuration.setBatch(new BatchInfo("Test"));
   });
 
   beforeEach(async function () {
-    configuration.setAppName("Demo App - WDIO 6 - demo");
-    configuration.setTestName("Smoke Test - WDIO 6 - demo");
+    configuration.setAppName("Test");
+    configuration.setTestName("Test");
     eyes.setConfiguration(configuration);
     browser = await eyes.open(browser);
   });
 
   it("first step", async () => {
     await browser.url("https://applitools.com/helloworld/");
-    configuration.setBatch(new BatchInfo("Test"));
     const loginButton = await browser.$(".section.button-section > button");
+    await eyes.checkWindow("Before mouse click");
     await loginButton.click();
-    await eyes.check("Basic Window", Target.window().fully());
+    await eyes.checkWindow("After mouse click");
     await eyes.closeAsync();
   });
   it("second step", async () => {
-    await browser.url("https://applitools.com/helloworld/");
+    await browser.url("https://applitools.com/helloworld/?diff1");
+    const loginButton = await browser.$(".section.button-section > button");
+    await eyes.check(
+      "Before mouse click",
+      Target.window().ignore(
+        By.cssSelector(".section p:nth-of-type(4),  .section p a")
+      )
+    );
+    await loginButton.click();
+    await eyes.check(
+      "After mouse click",
+      Target.window().ignore(
+        By.cssSelector(".section p:nth-of-type(4),  .section p a")
+      )
+    );
+    await eyes.closeAsync();
   });
 
   afterEach(async () => {
